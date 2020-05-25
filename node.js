@@ -31,6 +31,13 @@ app.get('/', (req, res) => {
     res.render('home', req)
 })
 
+app.get('/survey', (req, res) => {
+    // also puts into the header what kind of request it was.
+    req.title = 'Pokemon Survey'
+    res.render('survey', req)
+})
+
+
 app.get('/is_shiny', (req, res) => {
     var thing = [1,2,3]
     req.title = 'Shiny Pokemon Search'
