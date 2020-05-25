@@ -4,17 +4,6 @@ var bodyParser = require('body-parser');
 var path = require('path');
 
 
-function create_table(req) {
-
-    var myParams = {};
-    for (var p in req) {
-        myParams[p] = req[p]
-    }
-
-    return myParams
-}
-
-
 // create our app obj
 const app = express()
 // set the port to the port you are communicating with
