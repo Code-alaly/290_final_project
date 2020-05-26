@@ -1,9 +1,9 @@
 <h1>{{title}}</h1>
-<button class="dropbtn">Dropdown
-    <i class="fa fa-caret-down"></i>
-</button>
-<div class="dropdown-content">
-    <a href="">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
+<div class="overflow-auto">
+    {{#each weather}}
+        <h2>{{@key}}</h2>
+        <ul>
+            {{this}}
+        </ul>
+        {{/each}}
 </div>

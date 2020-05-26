@@ -9,7 +9,20 @@ body {
     overflow: hidden;
     position: relative;
     width: 80%;
-    background-color: lightgreen;
+    ;
+}
+.days {
+    flex: fit-content;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.form-group >div {
+    margin:0 10px 10px 0;
 }
 
 #box_2 {
@@ -17,7 +30,7 @@ body {
     position: relative;
     width: 80%;
     margin: auto;
-    background-color: saddlebrown;
+    ;
 }
 
 .first-pic {
@@ -117,4 +130,11 @@ a {
     padding: 8px 12px;
     position: absolute;
     top: 0;
+}
+
+.overflow-auto {
+    background-color: lightblue;
+    width: 50%;
+    height: 50%;
+    overflow: auto;
 }
