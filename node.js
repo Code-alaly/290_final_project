@@ -23,10 +23,10 @@ app.use(express.urlencoded({extended: false}))
 function api_call(url, host, hostPair, key, keyPair, query, queryPair) {
     var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
     var newReq = new XMLHttpRequest();
-    newReq.open("GET", "https://pokemon-go1.p.rapidapi.com/weather_boosts.json")
-    newReq.setRequestHeader("x-rapidapi-host", "pokemon-go1.p.rapidapi.com")
-    newReq.setRequestHeader("x-rapidapi-key", "3ee34390c0msh41a879d140ef586p1d24b8jsn5ec51d1df08a")
-    newReq.setRequestHeader("useQueryString", true)
+    newReq.open("GET", url)
+    newReq.setRequestHeader(host, hostPair)
+    newReq.setRequestHeader(key, keyPair)
+    newReq.setRequestHeader(query, queryPair)
     newReq.send()
     return newReq
 }
@@ -37,8 +37,6 @@ function loadUp(data) {
     }
 }
 
-// var call = api_call("https://pokemon-go1.p.rapidapi.com/weather_boosts.json", "x-rapidapi-host", "pokemon-go1.p.rapidapi.com",
-//     "x-rapidapi-key", "3ee34390c0msh41a879d140ef586p1d24b8jsn5ec51d1df08a", "useQueryString", true)
 
 
 // every time it gets a request, will check the session id to see some unique identifiers
@@ -46,6 +44,11 @@ app.get('/', (req, res) => {
     // also puts into the header what kind of request it was.
     req.title = 'Home Page'
     req.images = ['/images/fun_time', '/images/epic_looking', 'images/wwe_pika']
+    res.render('home', req)
+})
+
+app.post('/', (req, res) => {
+    res.download("/images/pokemon_go_cheatsheet.jpg")
     res.render('home', req)
 })
 
@@ -57,23 +60,20 @@ app.get('/survey', (req, res) => {
 })
 
 
-app.get('/is_shiny', (req, res) => {
-    var thing = [1, 2, 3]
-    req.title = 'Shiny Pokemon Search'
-    res.render('is_shiny', req)
+app.get('/alolan', (req, res) => {
+    req.title = 'Alolan Pokemon in Scrolling text element'
+    var aReq = api_call("https://pokemon-go1.p.rapidapi.com/alolan_pokemon.json", "x-rapidapi-host",  "pokemon-go1.p.rapidapi.com",
+        "x-rapidapi-key", "3ee34390c0msh41a879d140ef586p1d24b8jsn5ec51d1df08a", "useQueryString",
+        true)
+    aReq.onload = function () {
+        var alolan = JSON.parse((aReq.responseText))
+        req.alolan = alolan
+        res.render('alolan', req)
+    }
 })
 
 app.get('/weather_type', (req, res) => {
     req.title = 'Strong in this Weather Types'
-    // var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-    // var newReq =  new XMLHttpRequest();
-    // newReq.open("GET", "https://pokemon-go1.p.rapidapi.com/weather_boosts.json")
-    // newReq.setRequestHeader("x-rapidapi-host","pokemon-go1.p.rapidapi.com")
-    // newReq.setRequestHeader("x-rapidapi-key","3ee34390c0msh41a879d140ef586p1d24b8jsn5ec51d1df08a")
-    // newReq.setRequestHeader("useQueryString", true)
-    // newReq.send()
-    // var newReq = api_call("https://pokemon-go1.p.rapidapi.com/weather_boosts.json", "x-rapidapi-host", "pokemon-go1.p.rapidapi.com",
-    //     "x-rapidapi-key", "3ee34390c0msh41a879d140ef586p1d24b8jsn5ec51d1df08a", "useQueryString", true)
     var newReq = api_call("https://pokemon-go1.p.rapidapi.com/weather_boosts.json", "x-rapidapi-host", "pokemon-go1.p.rapidapi.com",
         "x-rapidapi-key", "3ee34390c0msh41a879d140ef586p1d24b8jsn5ec51d1df08a", "useQueryString", true)
     newReq.onload = function () {
@@ -93,6 +93,8 @@ app.post('/survey', (req, res) => {
 
     // so it re renders on the post, it doesn't do another get every time something happens
 })
+
+
 
 // when the app gets the first ready signal for the page.
 app.listen(app.get('port'), () => {
