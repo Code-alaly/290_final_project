@@ -21,6 +21,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 function api_call(url, host, hostPair, key, keyPair, query, queryPair) {
+    // function for making api call with the pokemon api site that I have.
+    // for each render, have to put it in on load function for this, then parse the
+    //data to a json, and then you can render the page.
     var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
     var newReq = new XMLHttpRequest();
     newReq.open("GET", url)
@@ -31,15 +34,11 @@ function api_call(url, host, hostPair, key, keyPair, query, queryPair) {
     return newReq
 }
 
-function loadUp(data) {
-    data.onload = function () {
-        return JSON.parse(newReq.responseText)
-    }
-}
 
 
 
-// every time it gets a request, will check the session id to see some unique identifiers
+
+
 app.get('/', (req, res) => {
     // also puts into the header what kind of request it was.
     req.title = 'Home Page'
